@@ -1,0 +1,53 @@
+<div class="container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Consulta de Festivos</mat-card-title>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="seccion">
+          <h3>Verificar Fecha Festiva</h3>
+          <mat-form-field>
+            <mat-label>Seleccione una fecha</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="fechaSeleccionada">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+  
+          <button mat-raised-button color="primary" (click)="verificarFestivo()">
+            Verificar
+          </button>
+  
+          <div *ngIf="resultadoVerificacion" class="resultado">
+            {{ resultadoVerificacion }}
+          </div>
+        </div>
+  
+        <div class="seccion">
+          <h3>Consultar Festivos por Año</h3>
+          <mat-form-field>
+            <mat-label>Año</mat-label>
+            <input matInput type="number" [(ngModel)]="anioSeleccionado" min="1900" max="2100">
+          </mat-form-field>
+  
+          <button mat-raised-button color="primary" (click)="obtenerFestivos()">
+            Consultar
+          </button>
+  
+          <div *ngIf="festivosResponse">
+            <p class="total-festivos">Total de festivos: {{festivosResponse.total}}</p>
+            
+            <ngx-datatable
+              [rows]="festivosResponse.data"
+              [columns]="columns"
+              [rowHeight]="50"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              [scrollbarH]="true"
+              class="material">
+            </ngx-datatable>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
